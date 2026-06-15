@@ -1,0 +1,24 @@
+nalu_install_dir=/Users/spdomino/gitHubWork/scratch_build/install/clang_17.0
+trilinos_install_dir=$nalu_install_dir/Trilinos_nightly_release
+yaml_install_dir=$nalu_install_dir/yaml/0.6.2
+gtest_install_dir=$nalu_install_dir/googletest/1.16.0
+
+EXTRA_ARGS=$@
+
+# Cleanup old cache before we configure
+# Note:  This does not remove files produced by make.  Use "make clean" for this.
+find . -name "CMakeFiles" -exec rm -rf {} \;
+rm -f CMakeCache.txt
+
+cmake \
+  -DTrilinos_DIR:PATH=$trilinos_install_dir \
+  -DYAML_DIR:PATH=$yaml_install_dir \
+  -DENABLE_INSTALL:BOOL=OFF \
+  -DCMAKE_BUILD_TYPE=RELEASE \
+  -DCMAKE_CXX_FLAGS:STRING="-Wall" \
+  -DENABLE_TESTS:BOOL=ON \
+  -DENABLE_LABORATORY_TESTS=ON \
+  -DENABLE_PERFORMANCE_TESTS=OFF \
+  -DGTest_ROOT="$gtest_install_dir" \
+$EXTRA_ARGS \
+../
