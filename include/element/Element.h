@@ -16,6 +16,7 @@
 #include <stdexcept>
 #include <string>
 #include <array>
+#include <limits>
 
 namespace stk {
   struct topology;
